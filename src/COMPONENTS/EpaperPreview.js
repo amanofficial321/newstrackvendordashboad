@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../CSS/EpaperPreview.scss";
 import { Viewer, Worker, SpecialZoomLevel } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 const EpaperPreview = () => {
   const location = useLocation();
@@ -130,9 +131,10 @@ const EpaperPreview = () => {
       );
 
       console.log(response.data);
-      setExtractedData(response.data.output_content2);
+      setExtractedData(response.data);
     } catch (error) {
       console.log(error);
+      alert();
     }
   };
 
@@ -181,7 +183,7 @@ const EpaperPreview = () => {
               {button && (
                 <button
                   onClick={fetchData}
-                  style={{ position: "absolute", top: "20%", right: "20%" }}
+                  style={{ position: "absolute", top: "20%", right: "30%" }}
                 >
                   Fetch Data
                 </button>
@@ -192,9 +194,9 @@ const EpaperPreview = () => {
       </div>
 
       <div style={getSelectionStyles()}></div>
-      <div className="preview-div">
+      {/* <div className="preview-div">
         {extractedData ? (
-          extractedData.map((data) => {
+          extractedData.output_content2.map((data) => {
             return (
               <p className="para" style={{ fontFamily: font }}>
                 {data[1]}
@@ -202,15 +204,30 @@ const EpaperPreview = () => {
             );
           })
         ) : (
-          <p>Loading ...</p>
+          <CircularProgress className="circularProgress" color="inherit" />
         )}
-        {/* {extractedData?.map((data) => {
-          return (
-            <p className="para" style={{ fontFamily: font }}>
-              {data[1]}
-            </p>
-          );
-        })} */}
+        {extractedData && (
+          <img src={`http://174.138.101.222:5000${extractedData?.image}`} />
+        )}
+      </div> */}
+      <div className="preview-div">
+        {extractedData ? (
+          <>
+            {extractedData.output_content2.map((data) => (
+              <p className="para" style={{ fontFamily: font }}>
+                {data[1]}
+              </p>
+            ))}
+            {/* <img src={`http://174.138.101.222:5000${extractedData?.image}`} /> */}
+            <img
+              src={`http://174.138.101.222:5000${
+                extractedData?.image
+              }?timestamp=${Date.now()}`}
+            />
+          </>
+        ) : (
+          <CircularProgress className="circularProgress" color="inherit" />
+        )}
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ import FormControl from "@mui/material/FormControl";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const Epaper = () => {
   const navigate = useNavigate();
@@ -23,7 +24,10 @@ const Epaper = () => {
   const [pdf, setPdf] = useState();
   const [size, setSize] = useState({});
 
+  const [loader, setLoader] = useState(false);
+
   const fetchPageSize = async (e) => {
+    setLoader(true);
     let formdata = new FormData();
     formdata.append("pdf", pdf);
     try {
@@ -43,6 +47,7 @@ const Epaper = () => {
           [index]: item[1],
         }));
       });
+      setLoader(false);
       // navigate("/EpaperPreview", {
       //   state: {
       //     pdf: pdf,
@@ -51,6 +56,8 @@ const Epaper = () => {
       // });
     } catch (error) {
       console.log(error);
+      setLoader(false);
+      alert("Error Occured");
     }
   };
   useEffect(() => {
@@ -64,12 +71,16 @@ const Epaper = () => {
     }
   }, [size, navigate, pdf]);
 
+  const [singlePdf, setSinglePdf] = useState("Upload PDF");
+  const [multiPdf, setMultiPdf] = useState("Upload PDF");
+
   return (
     <>
       <div className="Epapermaincontainer">
         <div className="epaperbox1">
           <Navbar />
         </div>
+
         <div className="epaperbox2">
           <div className="epaperheader">
             <p className="epaperheading">
@@ -168,10 +179,21 @@ const Epaper = () => {
               </FormControl>
             </Box>
           </Box>
+          {
+            <Backdrop
+              sx={{
+                color: "#fff",
+                zIndex: (theme) => theme.zIndex.drawer + 1,
+              }}
+              open={loader}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
+          }
           <div className="bottom">
             <div className="inputpdf">
               <label htmlFor="inputSinglePdf" className="inputTaglabel">
-                UPLOAD PDF <PictureAsPdfIcon className="pdficon" />
+                {singlePdf} <PictureAsPdfIcon className="pdficon" />
                 <p className="pdftext">SINGLE PAGE PDF</p>
               </label>
               <input
@@ -180,6 +202,7 @@ const Epaper = () => {
                 id="inputSinglePdf"
                 onChange={(e) => {
                   setPdf(e.target.files[0]);
+                  setSinglePdf(e.target.files[0].name);
                   setSize({});
                 }}
               />
@@ -187,7 +210,7 @@ const Epaper = () => {
 
             <div className="inputpdf">
               <label htmlFor="inputMultiPdf" className="inputTaglabel">
-                UPLOAD PDF <PictureAsPdfIcon className="pdficon" />
+                {multiPdf} <PictureAsPdfIcon className="pdficon" />
                 <p className="pdftext">MULTIPLE PAGE PDF</p>
               </label>
 
@@ -197,6 +220,7 @@ const Epaper = () => {
                 id="inputMultiPdf"
                 onChange={(e) => {
                   setPdf(e.target.files[0]);
+                  setMultiPdf(e.target.files[0].name);
                   setSize({});
                 }}
               />

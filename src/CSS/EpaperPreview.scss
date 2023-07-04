@@ -1,6 +1,10 @@
 * {
   box-sizing: border-box;
 }
+@font-face {
+  font-family: bhaskar;
+  src: url("../Fonts/Bhaskar.ttf");
+}
 
 .home-container {
   display: flex;
@@ -10,7 +14,7 @@
 
   .pdf-container {
     box-sizing: border-box;
-    background-color: rgb(43, 145, 145);
+    // background-color: rgb(43, 145, 145);
     border: 1px solid black;
     width: 70%;
     min-width: 1000px;
@@ -23,9 +27,21 @@
     max-height: 100vh;
     padding: 10px;
     overflow-y: auto;
+    overflow-x: auto;
+    position: relative;
 
     p {
       font-size: 16px;
+    }
+    .circularProgress {
+      position: absolute;
+      top: 50%;
+      left: 45%;
+      transform: translate(-100%, -50%);
+      color: aquamarine;
+    }
+    img {
+      width: 100%;
     }
   }
 }
