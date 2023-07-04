@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../CSS/Epaper.scss";
 import Navbar from "./Navbar";
 import Box from "@mui/material/Box";
@@ -16,25 +16,19 @@ const Epaper = () => {
   const navigate = useNavigate();
 
   const [age, setAge] = useState();
-
-  const [pdfData, setPdfData] = useState();
-
   const handleChange = (event) => {
     setAge(event.target.value);
   };
 
-  const [modalOpen, setModalOpen] = useState(false);
-
   const [pdf, setPdf] = useState();
+  const [size, setSize] = useState({});
 
-  const fetchData = async (e) => {
+  const fetchPageSize = async (e) => {
     let formdata = new FormData();
-    setPdf(e.target.files[0]);
-    formdata.append("pdf", e.target.files[0]);
-    console.log(formdata);
+    formdata.append("pdf", pdf);
     try {
       const response = await axios.post(
-        "http://174.138.101.222:5000/api/extract",
+        "http://174.138.101.222:5000/api/coordinate",
         formdata,
         {
           headers: {
@@ -42,43 +36,33 @@ const Epaper = () => {
           },
         }
       );
-      console.log(response.data);
-      setPdfData(response.data);
-      setModalOpen(true);
+
+      response.data.coordinates.forEach((item, index) => {
+        setSize((prevSize) => ({
+          ...prevSize,
+          [index]: item[1],
+        }));
+      });
+      // navigate("/EpaperPreview", {
+      //   state: {
+      //     pdf: pdf,
+      //     sizes: size,
+      //   },
+      // });
     } catch (error) {
       console.log(error);
     }
   };
-
-  const Modal = () => {
-    return (
-      <>
-        <div
-          className="modal-wrapper"
-          onClick={() => setModalOpen(false)}
-        ></div>
-        <div className="modal-container">
-          {pdfData.map((item) => {
-            return (
-              <div className="modal-items">
-                <p>{item}</p>
-                <div className="modal-buttons">
-                  <button className="publish">Publish</button>
-                  <button className="discard">Discard</button>
-                  <select name="" id="select">
-                    <option value="">HealthCare</option>
-                    <option value="">Education</option>
-                    <option value="">Sports</option>
-                    <option value="">National</option>
-                  </select>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </>
-    );
-  };
+  useEffect(() => {
+    if (Object.keys(size).length > 0) {
+      navigate("/EpaperPreview", {
+        state: {
+          pdf: pdf,
+          sizes: size,
+        },
+      });
+    }
+  }, [size, navigate, pdf]);
 
   return (
     <>
@@ -176,9 +160,7 @@ const Epaper = () => {
                   label="NEWS PAPER"
                   onChange={handleChange}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
+                  <MenuItem value={""}>None</MenuItem>
                   <MenuItem value={10}>Ten</MenuItem>
                   <MenuItem value={20}>Twenty</MenuItem>
                   <MenuItem value={30}>Thirty</MenuItem>
@@ -196,7 +178,10 @@ const Epaper = () => {
                 type="file"
                 className="inputTag"
                 id="inputSinglePdf"
-                onChange={fetchData}
+                onChange={(e) => {
+                  setPdf(e.target.files[0]);
+                  setSize({});
+                }}
               />
             </div>
 
@@ -210,20 +195,20 @@ const Epaper = () => {
                 type="file"
                 className="inputTag"
                 id="inputMultiPdf"
-                // onChange={() => setModalOpen(true)}
-                onChange={fetchData}
+                onChange={(e) => {
+                  setPdf(e.target.files[0]);
+                  setSize({});
+                }}
               />
             </div>
           </div>
 
           <button
             className="btn btn-primary btn-lg epaperbtn"
-            onClick={() => navigate("/Template3")}
+            onClick={() => fetchPageSize()}
           >
-            Submit
+            Preview
           </button>
-
-          {modalOpen && <Modal />}
         </div>
       </div>
     </>

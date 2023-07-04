@@ -23,7 +23,28 @@ const NewsApproval = () => {
   };
 
   const superAdminId = localStorage.getItem("superAdminId");
+  const superAdminToken = localStorage.getItem("superAdminToken");
 
+  /////////////////////////// Get API To Get Draft Articles ////////////////////////////////
+  const [drafts, setDrafts] = useState(null);
+  const getDrafts = async () => {
+    try {
+      const response = await axios.get(
+        `http://174.138.101.222:8080/${superAdminId}/get-draft-articles`,
+        {
+          headers: {
+            Authorization: `Bearer ${superAdminToken}`,
+          },
+        }
+      );
+      console.log(response, "draft articles");
+      setDrafts(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //////////////////////////////////////////////////////////////////////////////////
   /////////////////////////// Get API To Get Approved News ////////////////////////////////
   const [approvedNews, setApprovedNews] = useState(null);
   const getApprovedNews = async () => {
@@ -32,7 +53,7 @@ const NewsApproval = () => {
         `http://174.138.101.222:8080/${superAdminId}/getApproval`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("superAdminToken")}`,
+            Authorization: `Bearer ${superAdminToken}`,
           },
         }
       );
@@ -53,7 +74,7 @@ const NewsApproval = () => {
         `http://174.138.101.222:8080/${superAdminId}/getRejected`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("superAdminToken")}`,
+            Authorization: `Bearer ${superAdminToken}`,
           },
         }
       );
@@ -69,14 +90,13 @@ const NewsApproval = () => {
   ///////////////////////// Get API to get Unfiltered News ///////////////////////////
 
   const [data, setData] = useState();
-
   const getData = async () => {
     try {
       const response = await axios.get(
         `http://174.138.101.222:8080/${superAdminId}/postGet`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("superAdminToken")}`,
+            Authorization: `Bearer ${superAdminToken}`,
           },
         }
       );
@@ -102,11 +122,11 @@ const NewsApproval = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("superAdminToken")}`,
+            Authorization: `Bearer ${superAdminToken}`,
           },
         }
       );
-      // console.log(response, "Approved News Response");
+      console.log(response, "News Approved");
       getData();
       getApprovedNews();
     } catch (error) {
@@ -130,12 +150,13 @@ const NewsApproval = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("superAdminToken")}`,
+            Authorization: `Bearer ${superAdminToken}`,
           },
         }
       );
-      // console.log(response, "Rejected News Response");
+      console.log(response, "News Rejected");
       getData();
+      getDrafts();
       getRejectedNews();
     } catch (error) {
       console.log(error);
@@ -146,39 +167,40 @@ const NewsApproval = () => {
 
   //////////////////////////  Put API To Update Schedule Date Time ////////////////////////////////
 
-  const handleScheduleDate = async (
-    event,
-    newsId,
-    schedule_date,
-    schedule_time
-  ) => {
-    event.stopPropagation();
+  // const handleScheduleDate = async (
+  //   event,
+  //   newsId,
+  //   schedule_date,
+  //   schedule_time
+  // ) => {
+  //   event.stopPropagation();
 
-    try {
-      const response = await axios.put(
-        `http://174.138.101.222:8080/${superAdminId}/UpdateDateTime`,
-        {
-          _id: newsId,
-          schedule_date: schedule_date,
-          schedule_time: schedule_time,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("superAdminToken")}`,
-          },
-        }
-      );
-      console.log(response, "Update Schedule Date Time Response");
-      getData();
-      getApprovedNews();
-    } catch (error) {
-      // console.log(error);
-    }
-  };
+  //   try {
+  //     const response = await axios.put(
+  //       `http://174.138.101.222:8080/${superAdminId}/UpdateDateTime`,
+  //       {
+  //         _id: newsId,
+  //         schedule_date: schedule_date,
+  //         schedule_time: schedule_time,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${superAdminToken}`,
+  //         },
+  //       }
+  //     );
+  //     console.log(response, "Update Schedule Date Time Response");
+  //     getData();
+  //     getApprovedNews();
+  //   } catch (error) {
+  //     // console.log(error);
+  //   }
+  // };
 
   ///////////////////////////////////////////////////////////////////////////////////
 
   useEffect(() => {
+    getDrafts();
     getData();
     getApprovedNews();
     getRejectedNews();
@@ -204,7 +226,7 @@ const NewsApproval = () => {
   };
 
   const utcToGmt = (time) => {
-    if (time != undefined) {
+    if (time !== undefined) {
       const utc =
         60 * Number(time.slice(0, 2)) + Number(time.slice(3, 5)) + 330;
       const gmtMin = utc % 60;
@@ -226,8 +248,8 @@ const NewsApproval = () => {
         </h1>
         <ButtonGroup className="me-2 groupOfButtons" aria-label="First group">
           {" "}
-          <Button>
-            Draft <div>0</div>
+          <Button onClick={() => setTable("Drafts")}>
+            Draft <div>{drafts?.length}</div>
           </Button>{" "}
           <Button onClick={() => setTable("Pending Approval")}>
             Pending Approval <div>{data?.data.data.length}</div>
@@ -248,6 +270,92 @@ const NewsApproval = () => {
             Scheduled <div>0</div>
           </Button> */}
         </ButtonGroup>
+
+        {table === "Drafts" && (
+          <table>
+            <thead>
+              <tr>
+                <th>S.No.</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Created Time</th>
+                <th>Last Update</th>
+                <th>Author Name</th>
+                <th>News Agency</th>
+                <th>Operation</th>
+              </tr>
+            </thead>
+
+            {drafts?.map((item, index) => {
+              return (
+                <tbody key={item?._id}>
+                  <tr
+                    onClick={() => navigate("/viewNews", { state: { item } })}
+                    className="pointer "
+                  >
+                    <td>{index + 1}</td>
+                    <td dangerouslySetInnerHTML={{ __html: item.title }}></td>
+                    <td>{item.category}</td>
+                    <td>
+                      <p>{item.createdAt.slice(0, 10)}</p>
+                      <p>{utcToGmt(item.createdAt.slice(11, 16))}</p>
+                    </td>
+                    <td>
+                      <p>{item.updatedAt.slice(0, 10)}</p>
+                      <p>{utcToGmt(item.updatedAt.slice(11, 16))}</p>
+                    </td>
+                    <td>{item.author_name}</td>
+                    <td>{item.username}</td>
+
+                    <td>
+                      {delArray.includes(item._id) ? (
+                        <form
+                          onClick={(e) => e.stopPropagation()}
+                          onSubmit={(e) => e.preventDefault()}
+                        >
+                          <textarea
+                            placeholder="Rejection remarks"
+                            onChange={(e) => setRemark(e.target.value)}
+                          />
+                          <button
+                            type="submit"
+                            onClick={(event) => {
+                              console.log(item._id, remark);
+                              handleReject(event, item._id, remark);
+                            }}
+                          >
+                            Reject
+                          </button>
+                        </form>
+                      ) : (
+                        <div>
+                          <span className="pointer" onClick={handleEdit}>
+                            <FaEdit />
+                          </span>
+                          <span
+                            className="pointer"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setDelArray([...delArray, item._id]);
+                              console.log("Delete Clicked", delArray);
+                            }}
+                          >
+                            <AiTwotoneDelete className="delete" />
+                          </span>
+                          <span className="pointer" title="View News">
+                            <FiEye />
+                          </span>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                </tbody>
+              );
+            })}
+
+            <tfoot></tfoot>
+          </table>
+        )}
 
         {table === "Pending Approval" && (
           <table>

@@ -15,6 +15,7 @@ import Template2 from "./COMPONENTS/Template2";
 import Template3 from "./COMPONENTS/Template3";
 import NewsAgencyNewsApproval from "./COMPONENTS/NewsAgencyNewsApproval";
 import RoleManagement from "./COMPONENTS/Role-Management";
+import EpaperPreview from "./COMPONENTS/EpaperPreview";
 
 const App = () => {
   return (
@@ -32,7 +33,7 @@ const App = () => {
         <Route path="/Template2" element={<Template2 />} />
         <Route path="/Template3" element={<Template3 />} />
         <Route path="/RoleManagement" element={<RoleManagement />} />
-
+        <Route path="/EpaperPreview" element={<EpaperPreview />} />
         <Route
           path="/NewsAgencyNewsApproval"
           element={<NewsAgencyNewsApproval />}
