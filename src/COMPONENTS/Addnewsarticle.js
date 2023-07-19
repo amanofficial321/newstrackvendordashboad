@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../CSS/Addnewsarticle.scss";
+import "../CSS/Addnewsarticle.module.scss";
 import Navbar from "./Navbar";
 import { HiOutlineArrowSmallLeft } from "react-icons/hi2";
 import InputLabel from "@mui/material/InputLabel";
@@ -8,18 +8,20 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Editor from "ckeditor5-custom-build/build/ckeditor";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import categories from "../Masters/Categories";
 
 const Addnewsarticle = () => {
   ///////////////////////////////// To take user input ///////////////////////////////////////
+
   let initialValues = {
     category: "",
     title: "",
-    sub_heading: "",
+    sub_heading: "Sub Heading",
     short_details: "",
     body: "",
     image: "",
@@ -38,7 +40,7 @@ const Addnewsarticle = () => {
     const { name, value } = event.target;
     if (name === "image") {
       setValues({ ...values, [name]: event.target.files[0] });
-      console.log(values);
+      // console.log(values);
     } else {
       setValues({ ...values, [name]: value });
     }
@@ -54,17 +56,21 @@ const Addnewsarticle = () => {
         formdata.append(key, values[key]);
       }
     }
-    const superAdminToken = localStorage?.getItem("superAdminToken");
-    const superAdminId = localStorage?.getItem("superAdminId");
+    const newspaperAgencyAdminToken = localStorage?.getItem(
+      "newspaperAgencyAdminToken"
+    );
+    const newspaperAgencyAdminId = localStorage?.getItem(
+      "newspaperAgencyAdminId"
+    );
 
-    console.log(formdata);
+    // console.log(formdata);
     axios({
       method: "post",
-      url: `http://174.138.101.222:8080/${superAdminId}/post-news`,
+      url: `http://174.138.101.222:8080/${newspaperAgencyAdminId}/post-news`,
       data: formdata,
       headers: {
         "content-type": "multipart/form-data",
-        Authorization: "Bearer " + superAdminToken,
+        Authorization: "Bearer " + newspaperAgencyAdminToken,
       },
     })
       .then((response) => alert(response.data.message))
@@ -81,29 +87,33 @@ const Addnewsarticle = () => {
         formdata.append(key, values[key]);
       }
     }
-    const superAdminToken = localStorage?.getItem("superAdminToken");
-    const superAdminId = localStorage?.getItem("superAdminId");
+    const newspaperAgencyAdminToken = localStorage?.getItem(
+      "newspaperAgencyAdminToken"
+    );
+    const newspaperAgencyAdminId = localStorage?.getItem(
+      "newspaperAgencyAdminId"
+    );
 
     console.log(formdata);
     axios({
       method: "post",
-      url: `http://174.138.101.222:8080/${superAdminId}/draft-article`,
+      url: `http://174.138.101.222:8080/${newspaperAgencyAdminId}/draft-article`,
       data: formdata,
       headers: {
         "content-type": "multipart/form-data",
-        Authorization: "Bearer " + superAdminToken,
+        Authorization: "Bearer " + newspaperAgencyAdminToken,
       },
     })
       .then((response) => alert(response.data.message))
       .catch((error) => console.log(error));
   };
-  ///////////////////////////////// To send axios request ///////////////////////////////////////
+  ///////////////////////////////// To send draft request ///////////////////////////////////////
 
   return (
     <>
       <Navbar />
       <div className="parentContainer">
-        <h1>
+        <h1 className="bg-red">
           <span>
             <HiOutlineArrowSmallLeft />
           </span>
@@ -111,7 +121,9 @@ const Addnewsarticle = () => {
         </h1>
 
         <FormControl className="FormControl">
-          <InputLabel id="demo-simple-select-helper-label">CATEGORY</InputLabel>
+          <InputLabel id="demo-simple-select-helper-label">
+            "Category"
+          </InputLabel>
           <Select
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
@@ -120,19 +132,17 @@ const Addnewsarticle = () => {
             value={values.category}
             onChange={handleInputChange}
           >
-            <MenuItem value={"Healthcare"}>Healthcare</MenuItem>
-            <MenuItem value={"Politics"}>Politics</MenuItem>
-            <MenuItem value={"Education"}>Education</MenuItem>
-            <MenuItem value={"Sports"}>Sports</MenuItem>
-            <MenuItem value={"International"}>International</MenuItem>
+            {categories.map((item) => {
+              return <MenuItem value={item}>{item}</MenuItem>;
+            })}
           </Select>
         </FormControl>
 
         <div className="ckeditor FormControl">
           <p className="cktitle ">Title *</p>
           <CKEditor
-            editor={ClassicEditor}
-            data="<p>Hello from CKEditor 5!</p>"
+            editor={Editor}
+            data="<p></p>"
             name="title"
             value={values.title}
             onChange={(event, editor) => {
@@ -144,7 +154,7 @@ const Addnewsarticle = () => {
             }}
           />
         </div>
-        <div className="ckeditor">
+        {/* <div className="ckeditor">
           <p className="cktitle">Sub Heading *</p>
           <CKEditor
             editor={ClassicEditor}
@@ -159,12 +169,12 @@ const Addnewsarticle = () => {
               });
             }}
           />
-        </div>
-        <div className="ckeditor">
+        </div> */}
+        <div className="ckeditor FormControl">
           <p className="cktitle">Summary / Short Details *</p>
           <CKEditor
-            editor={ClassicEditor}
-            data="<p>Hello from CKEditor 5!</p>"
+            editor={Editor}
+            data="<p></p>"
             name="short_details"
             value={values.short_details}
             onChange={(event, editor) => {
@@ -176,11 +186,11 @@ const Addnewsarticle = () => {
             }}
           />
         </div>
-        <div className="ckeditor">
+        <div className="ckeditor ckeditorBody FormControl">
           <p className="cktitle">Body *</p>
           <CKEditor
-            editor={ClassicEditor}
-            data="<p>Hello from CKEditor 5!</p>"
+            editor={Editor}
+            data={values.body}
             name="body"
             value={values.body}
             onChange={(event, editor) => {
@@ -192,12 +202,16 @@ const Addnewsarticle = () => {
             }}
           />
         </div>
+
+        {/* <p className="cktitle FormControl ">Image *</p> */}
+
         <TextField
           id="outlined-basic"
           variant="outlined"
           type="file"
-          className="FormControl"
-          label="Image"
+          className="FormControl "
+          // label="Image"
+          // value={values.image}
           name="image"
           onChange={handleInputChange}
         />
@@ -284,16 +298,18 @@ const Addnewsarticle = () => {
           label="News Sections"
           className=" FormControl"
         />
+
         <Button
           variant="contained"
-          className="FormControl "
+          className="FormControl bg-red"
           onClick={draftHandeler}
         >
           Save to Drafts
         </Button>
+
         <Button
           variant="contained"
-          className="FormControl "
+          className="FormControl bg-red"
           onClick={saveHandeler}
         >
           Post News

@@ -17,27 +17,24 @@ const NewsApproval = () => {
     navigate(-1);
   };
 
-  const handleEdit = (e) => {
-    e.stopPropagation();
-    alert("edit clicked");
-  };
-
-  const superAdminId = localStorage.getItem("superAdminId");
-  const superAdminToken = localStorage.getItem("superAdminToken");
+  const newspaperAgencyAdminId = localStorage.getItem("newspaperAgencyAdminId");
+  const newspaperAgencyAdminToken = localStorage.getItem(
+    "newspaperAgencyAdminToken"
+  );
 
   /////////////////////////// Get API To Get Draft Articles ////////////////////////////////
   const [drafts, setDrafts] = useState(null);
   const getDrafts = async () => {
     try {
       const response = await axios.get(
-        `http://174.138.101.222:8080/${superAdminId}/get-draft-articles`,
+        `http://174.138.101.222:8080/${newspaperAgencyAdminId}/get-draft-articles-vendor`,
         {
           headers: {
-            Authorization: `Bearer ${superAdminToken}`,
+            Authorization: `Bearer ${newspaperAgencyAdminToken}`,
           },
         }
       );
-      console.log(response, "draft articles");
+      // console.log(response, "draft articles");
       setDrafts(response.data.data);
     } catch (error) {
       console.log(error);
@@ -50,10 +47,10 @@ const NewsApproval = () => {
   const getApprovedNews = async () => {
     try {
       const response = await axios.get(
-        `http://174.138.101.222:8080/${superAdminId}/getApproval`,
+        `http://174.138.101.222:8080/${newspaperAgencyAdminId}/getApprovalVendor`,
         {
           headers: {
-            Authorization: `Bearer ${superAdminToken}`,
+            Authorization: `Bearer ${newspaperAgencyAdminToken}`,
           },
         }
       );
@@ -71,10 +68,10 @@ const NewsApproval = () => {
   const getRejectedNews = async () => {
     try {
       const response = await axios.get(
-        `http://174.138.101.222:8080/${superAdminId}/getRejected`,
+        `http://174.138.101.222:8080/${newspaperAgencyAdminId}/getRejectedVendor`,
         {
           headers: {
-            Authorization: `Bearer ${superAdminToken}`,
+            Authorization: `Bearer ${newspaperAgencyAdminToken}`,
           },
         }
       );
@@ -93,10 +90,10 @@ const NewsApproval = () => {
   const getData = async () => {
     try {
       const response = await axios.get(
-        `http://174.138.101.222:8080/${superAdminId}/postGet`,
+        `http://174.138.101.222:8080/${newspaperAgencyAdminId}/postGetVendor`,
         {
           headers: {
-            Authorization: `Bearer ${superAdminToken}`,
+            Authorization: `Bearer ${newspaperAgencyAdminToken}`,
           },
         }
       );
@@ -114,7 +111,7 @@ const NewsApproval = () => {
     event.stopPropagation();
     try {
       const response = await axios.put(
-        `http://174.138.101.222:8080/${superAdminId}/ApprovalupdateNews`,
+        `http://174.138.101.222:8080/${newspaperAgencyAdminId}/ApprovalupdateNews`,
         {
           _id: newsId,
           schedule_date: schedule_date,
@@ -122,7 +119,7 @@ const NewsApproval = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${superAdminToken}`,
+            Authorization: `Bearer ${newspaperAgencyAdminToken}`,
           },
         }
       );
@@ -143,14 +140,14 @@ const NewsApproval = () => {
 
     try {
       const response = await axios.put(
-        `http://174.138.101.222:8080/${superAdminId}/RejectUpdateNews`,
+        `http://174.138.101.222:8080/${newspaperAgencyAdminId}/RejectUpdateNews`,
         {
           _id: newsId,
           remark: remark,
         },
         {
           headers: {
-            Authorization: `Bearer ${superAdminToken}`,
+            Authorization: `Bearer ${newspaperAgencyAdminToken}`,
           },
         }
       );
@@ -162,40 +159,6 @@ const NewsApproval = () => {
       console.log(error);
     }
   };
-
-  ///////////////////////////////////////////////////////////////////////////////////
-
-  //////////////////////////  Put API To Update Schedule Date Time ////////////////////////////////
-
-  // const handleScheduleDate = async (
-  //   event,
-  //   newsId,
-  //   schedule_date,
-  //   schedule_time
-  // ) => {
-  //   event.stopPropagation();
-
-  //   try {
-  //     const response = await axios.put(
-  //       `http://174.138.101.222:8080/${superAdminId}/UpdateDateTime`,
-  //       {
-  //         _id: newsId,
-  //         schedule_date: schedule_date,
-  //         schedule_time: schedule_time,
-  //       },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${superAdminToken}`,
-  //         },
-  //       }
-  //     );
-  //     console.log(response, "Update Schedule Date Time Response");
-  //     getData();
-  //     getApprovedNews();
-  //   } catch (error) {
-  //     // console.log(error);
-  //   }
-  // };
 
   ///////////////////////////////////////////////////////////////////////////////////
 
@@ -240,7 +203,7 @@ const NewsApproval = () => {
     <>
       <Navbar />
       <div className="parentContainer">
-        <h1>
+        <h1 className="bg-red">
           <span>
             <HiOutlineArrowSmallLeft onClick={back} className="pointer" />
           </span>
@@ -329,7 +292,13 @@ const NewsApproval = () => {
                         </form>
                       ) : (
                         <div>
-                          <span className="pointer" onClick={handleEdit}>
+                          <span
+                            className="pointer"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate("/editDraft", { state: item });
+                            }}
+                          >
                             <FaEdit />
                           </span>
                           <span
@@ -476,7 +445,13 @@ const NewsApproval = () => {
                         </form>
                       ) : (
                         <div>
-                          <span className="pointer" onClick={handleEdit}>
+                          <span
+                            className="pointer"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate("/editArticle", { state: item });
+                            }}
+                          >
                             <FaEdit />
                           </span>
                           <span

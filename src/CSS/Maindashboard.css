@@ -5,6 +5,7 @@
 
 .dashboardtext {
   background-color: rgb(49, 70, 177);
+  background-color: red;
   color: white;
   height: 12%;
   width: 100%;
@@ -59,7 +60,8 @@
   margin: 0;
 }
 .userstatusboxcontant span {
-  color: rgb(49, 70, 177);
+  /* color: rgb(49, 70, 177); */
+  color: red;
   font-size: 18px;
   font-weight: 700;
 }
@@ -80,7 +82,8 @@
 }
 
 .E-PAPER-MODULE-text {
-  color: rgb(49, 70, 177);
+  /* color: rgb(49, 70, 177); */
+  color: red;
   margin: 5%;
   font-weight: 700;
 }

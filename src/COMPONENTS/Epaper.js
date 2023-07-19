@@ -228,7 +228,7 @@ const Epaper = () => {
           </div>
 
           <button
-            className="btn btn-primary btn-lg epaperbtn"
+            className="btn btn-primary btn-lg epaperbtn bg-red"
             onClick={() => fetchPageSize()}
           >
             Preview

@@ -1,0 +1,53 @@
+import React from "react";
+import "../CSS/ViewNews.scss";
+import Navbar from "./Navbar";
+import { HiOutlineArrowSmallLeft } from "react-icons/hi2";
+import { useLocation, useNavigate } from "react-router-dom";
+
+const TemplateSelection = () => {
+  const navigate = useNavigate();
+
+  //   const item = newsData?.state.item;
+  // console.log(item);
+  return (
+    <>
+      <Navbar />
+      <div className="parentContainer">
+        <h1 className="bg-red">
+          <span onClick={() => navigate(-1)} className="pointer">
+            <HiOutlineArrowSmallLeft />
+          </span>
+          <span>Template Selection</span>
+        </h1>
+        <h5 className="px-3">
+          To use any of the available Template in your website , just simply
+          update the record in your domain DNS configuration with the url
+          provided in the Template below.
+        </h5>
+        <div className="d-flex px-3">
+          <div className="card " style={{ width: "30rem" }}>
+            <img
+              className="card-img-top"
+              src={require("../Images/Screenshot (5).png")}
+              alt="Card image cap"
+              width={"100%"}
+              height={"200px"}
+            />
+            <div className="card-body">
+              <h5 className="card-title d-flex justify-content-center font-weight-bold">
+                Template 1
+              </h5>
+              <a className="card-text">
+                {`http://174.138.101.222:6000/Home/${localStorage.getItem(
+                  "newspaperAgencyAdminId"
+                )}`}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default TemplateSelection;
