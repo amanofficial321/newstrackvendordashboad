@@ -38,7 +38,7 @@ const TemplateSelection = () => {
                 Template 1
               </h5>
               <a className="card-text">
-                {`http://174.138.101.222:6000/Home/${localStorage.getItem(
+                {`http://174.138.101.222:7000/Home/${localStorage.getItem(
                   "newspaperAgencyAdminId"
                 )}`}
               </a>
