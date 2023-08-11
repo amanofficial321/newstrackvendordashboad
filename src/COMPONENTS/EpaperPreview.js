@@ -119,7 +119,8 @@ const EpaperPreview = () => {
       // console.log("x-y start", startX - offsetX, startY - offsetY);
       // console.log("x-y end", clientX - offsetX, clientY - offsetY);
       setFinalCo({
-        minX: (startX.current - offsetX - scrollbar.current) / zoom.current,
+        minX: (startX.current - offsetX) / zoom.current,
+        // minX: (startX.current - offsetX - scrollbar.current) / zoom.current,
         minY: (startY.current - offsetY) / zoom.current,
         maxX: (clientX - offsetX - scrollbar.current) / zoom.current,
         maxY: (clientY - offsetY) / zoom.current,
@@ -161,6 +162,7 @@ const EpaperPreview = () => {
         }
       );
       let resData = response.data.data;
+      console.log(resData);
       let bodyString = "";
       // console.log(resData);
       for (let i = 0; i < resData.length; i++) {

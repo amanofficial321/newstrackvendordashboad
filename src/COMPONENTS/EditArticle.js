@@ -44,36 +44,47 @@ const EditArticle = () => {
 
   const [values, setValues] = useState(initialValues);
 
+  const [imagePreview, setImagePreview] = useState(
+    `http://174.138.101.222:8080${values.image}`
+  );
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-
-    setValues({ ...values, [name]: value });
+    if (name === "image") {
+      setValues({ ...values, [name]: event.target.files[0] });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    } else {
+      setValues({ ...values, [name]: value });
+    }
   };
   ///////////////////////////////////////////////////////////////////////////////////////////////
 
   ///////////////////////////////// To send Update request ///////////////////////////////////////
 
   const UpdateHandeler = () => {
-    // let formdata = new FormData();
-    // for (const key in values) {
-    //   if (values.hasOwnProperty(key)) {
-    //     formdata.append(key, values[key]);
-    //   }
-    // }
+    let formdata = new FormData();
+    for (const key in values) {
+      if (values.hasOwnProperty(key)) {
+        formdata.append(key, values[key]);
+      }
+    }
     // console.log(values);
-    // console.log(formdata);
+    console.log(formdata);
     axios({
       method: "put",
       url: `http://174.138.101.222:8080/UpdateArticle`,
-      data: values,
-      // headers: {
-      //   "content-type": "multipart/form-data",
-      // },
+      data: formdata,
+      headers: {
+        "content-type": "multipart/form-data",
+      },
     })
       .then(async (response) => {
         alert(response.data.message);
         navigate("/news-approval");
-        // console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -192,7 +203,7 @@ const EditArticle = () => {
         </div>
 
         <img
-          src={location.state.image}
+          src={imagePreview}
           style={{
             height: "300px",
             width: "90%",
@@ -202,16 +213,16 @@ const EditArticle = () => {
           }}
         />
 
-        {/* <TextField
-            id="outlined-basic"
-            variant="outlined"
-            type="file"
-            className="FormControl"
-            label="Image"
-            // value={values.image}
-            name="image"
-            onChange={handleInputChange}
-          /> */}
+        <TextField
+          id="outlined-basic"
+          variant="outlined"
+          type="file"
+          className="FormControl"
+          aria-label="Image"
+          // value={values.image}
+          name="image"
+          onChange={handleInputChange}
+        />
 
         <TextField
           id="outlined-basic"

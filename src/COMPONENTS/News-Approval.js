@@ -244,7 +244,7 @@ const NewsApproval = () => {
                 <th>Created Time</th>
                 <th>Last Update</th>
                 <th>Author Name</th>
-                <th>News Agency</th>
+                {/* <th>News Agency</th> */}
                 <th>Operation</th>
               </tr>
             </thead>
@@ -268,7 +268,7 @@ const NewsApproval = () => {
                       <p>{utcToGmt(item.updatedAt.slice(11, 16))}</p>
                     </td>
                     <td>{item.author_name}</td>
-                    <td>{item.username}</td>
+                    {/* <td>{item.username}</td> */}
 
                     <td>
                       {delArray.includes(item._id) ? (
@@ -336,7 +336,7 @@ const NewsApproval = () => {
                 <th>Created Time</th>
                 <th>Last Update</th>
                 <th>Author Name</th>
-                <th>News Agency</th>
+                {/* <th>News Agency</th> */}
                 <th>Schedule</th>
                 <th>Operation</th>
               </tr>
@@ -361,7 +361,7 @@ const NewsApproval = () => {
                       <p>{utcToGmt(item.updatedAt.slice(11, 16))}</p>
                     </td>
                     <td>{item.author_name}</td>
-                    <td>{item.username}</td>
+                    {/* <td>{item.username}</td> */}
                     <td>
                       {later.includes(item._id) ? (
                         <form>
@@ -502,7 +502,7 @@ const NewsApproval = () => {
                 <th>Publishing Time</th>
                 <th>Author Name</th>
                 <th>Approved By</th>
-                <th>News Agency</th>
+                {/* <th>News Agency</th> */}
 
                 <th>Operation</th>
               </tr>
@@ -529,7 +529,7 @@ const NewsApproval = () => {
                     </td>
                     <td>{item.author_name}</td>
                     <td>Approved By</td>
-                    <td>{item.username}</td>
+                    {/* <td>{item.username}</td> */}
 
                     <td>
                       <span className="pointer" title="Edit News">
@@ -570,7 +570,7 @@ const NewsApproval = () => {
                 <th>Author Name</th>
                 <th>Rejected By</th>
                 <th>Rejection Remarks</th>
-                <th>News Agency</th>
+                {/* <th>News Agency</th> */}
 
                 <th>Operation</th>
               </tr>
@@ -598,7 +598,7 @@ const NewsApproval = () => {
                     <td>{item.author_name}</td>
                     <td>Rejected By</td>
                     <td>{item.remark}</td>
-                    <td>{item.username}</td>
+                    {/* <td>{item.username}</td> */}
 
                     <td>
                       <span className="pointer" title="Edit News">

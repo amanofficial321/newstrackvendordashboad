@@ -14,7 +14,7 @@ const Maindashboard = () => {
         </div>
         <div className="dashbox ">
           <p className="dashboardtext">MAIN DASHBOARD</p>
-          <div className="userstatuscontainer">
+          {/* <div className="userstatuscontainer">
             <div className="userstatusbox3">
               <div className="iconscontainer">
                 <WorkOutlineIcon
@@ -55,21 +55,9 @@ const Maindashboard = () => {
                 <span>154.3k</span>
               </p>
             </div>
-          </div>
-          <div className="userstatuscontainer">
+          </div> */}
+          {/* <div className="userstatuscontainer">
             <div className="userstatusbox6  ">
-              {/* <div className="progress">
-                <div
-                  className="progress-bar progress-bar-striped active"
-                  role="progressbar"
-                  aria-valuenow="40"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                  
-                >
-                  40%
-                </div>
-              </div> */}
               <img src={Progress} alt="" className="progress" />
             </div>
             <div className="userstatusbox4">
@@ -87,21 +75,45 @@ const Maindashboard = () => {
                 <span className="epapermodulespan">300+</span>
               </li>
             </div>
-          </div>
+          </div> */}
+          <h3>Upcoming Features :-</h3>
 
           <div className="userstatuscontainer">
             <div className="userstatusbox5  ">
               <img
                 className="toiimage"
-                src="https://static.startuptalky.com/2022/02/Times-of-India-Campaigns-StartupTalky.jpg"
-                alt="no-image"
+                src={require("../Images/Mobile App.jpg")}
+                alt="no"
               />
-              <p className="toideccription">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              </p>
+              <h4 className="text-center">Mobile Application</h4>
             </div>
-            <div className="userstatusbox5 mb-5 ">
+            <div className="userstatusbox5  ">
+              <img
+                className="toiimage"
+                src={require("../Images/Advertisement Image.jpg")}
+                alt="no"
+              />
+              <h4 className="text-center">Advertising Management</h4>
+            </div>
+
+            <div className="userstatusbox5  ">
+              <img
+                className="toiimage"
+                src={require("../Images/Analytics.webp")}
+                alt="no"
+              />
+              <h4 className="text-center">Analytics Dashboard</h4>
+            </div>
+            <div className="userstatusbox5  ">
+              <img
+                className="toiimage"
+                src={require("../Images/AI Image.jpg")}
+                alt="no"
+              />
+              <h4 className="text-center">AI Features</h4>
+            </div>
+
+            {/* <div className="userstatusbox5 mb-5 ">
               <img
                 className="toiimage"
                 src="https://static.startuptalky.com/2022/02/Times-of-India-Campaigns-StartupTalky.jpg"
@@ -111,11 +123,12 @@ const Maindashboard = () => {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               </p>
-            </div>
-            <div className="userstatusbox54  ">
+            </div> */}
+            {/* <div className="userstatusbox54  ">
               <img className="adimage" src={AdMgmt} alt="no-image" />
-            </div>
+            </div> */}
           </div>
+          <h3 className="mt-4">Self Help Videos :-</h3>
         </div>
       </div>
     </>

@@ -65,9 +65,9 @@ const Navbar = () => {
             AD MANAGEMENT
           </p>
           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a className="dropdown-item" href="#">
+            <Link to={"/create-ad"} className="dropdown-item">
               CREATE AN AD
-            </a>
+            </Link>
             <a className="dropdown-item" href="#">
               AD LIST
             </a>

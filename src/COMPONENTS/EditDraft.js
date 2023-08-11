@@ -29,7 +29,7 @@ const Addnewsarticle = () => {
     sub_heading: "Sub Heading",
     short_details: "",
     body: location?.state.body,
-    image: location?.state.image,
+    image: "",
     url: "",
     tags: "",
     news_priority: "",
@@ -225,29 +225,17 @@ const Addnewsarticle = () => {
             }}
           />
         </div>
-        {location ? (
-          <img
-            src={location.state.image}
-            style={{
-              height: "300px",
-              width: "90%",
-              objectFit: "contain",
-              margin: "auto",
-              border: "1px solid black",
-            }}
-          />
-        ) : (
-          <TextField
-            id="outlined-basic"
-            variant="outlined"
-            type="file"
-            className="FormControl"
-            label="Image"
-            // value={values.image}
-            name="image"
-            onChange={handleInputChange}
-          />
-        )}
+
+        <TextField
+          id="outlined-basic"
+          variant="outlined"
+          type="file"
+          className="FormControl"
+          aria-label="Image"
+          // value={values.image}
+          name="image"
+          onChange={handleInputChange}
+        />
 
         <TextField
           id="outlined-basic"

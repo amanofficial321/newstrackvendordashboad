@@ -12,6 +12,7 @@ import EpaperPreview from "./COMPONENTS/EpaperPreview";
 import EditDraft from "./COMPONENTS/EditDraft";
 import EditArticle from "./COMPONENTS/EditArticle";
 import TemplateSelection from "./COMPONENTS/TemplateSelection";
+import CreateAd from "./COMPONENTS/CreateAd";
 
 const App = () => {
   return (
@@ -19,7 +20,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<NewspaperAgencyLogin />} />
         <Route path="/dashboard" element={<Maindashboard />} />
-        {/* <Route path="/role" element={<Personalinfromation />} /> */}
+        <Route path="/create-ad" element={<CreateAd />} />
         <Route path="/news-approval" element={<NewsApproval />} />
         <Route path="/viewNews" element={<ViewNews />} />
         <Route path="/addNewsArticle" element={<Addnewsarticle />} />
