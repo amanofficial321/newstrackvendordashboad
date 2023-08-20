@@ -12,7 +12,6 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import categories from "../Masters/Categories";
 
 const EpaperPreview = () => {
   const location = useLocation();
@@ -233,6 +232,23 @@ const EpaperPreview = () => {
   };
   ///////////////////////////////// To send draft request ///////////////////////////////////////
 
+  const [categories, setCategories] = useState([]);
+  const getCategories = async () => {
+    try {
+      const response = await axios.get(
+        "http://174.138.101.222:8080/getmastercategories"
+      );
+      console.log(response.data.data, "categories");
+      setCategories(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   return (
     <div className="home-container">
       <div
@@ -282,8 +298,9 @@ const EpaperPreview = () => {
               >
                 {categories.map((item, index) => {
                   return (
-                    <MenuItem value={item} key={index}>
-                      {item}
+                    <MenuItem value={item.categories_Name_Url} key={index}>
+                      {item.categories_Name_English} /{" "}
+                      {item.categories_Name_Hindi}
                     </MenuItem>
                   );
                 })}

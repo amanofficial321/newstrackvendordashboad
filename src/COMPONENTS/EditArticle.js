@@ -72,7 +72,6 @@ const EditArticle = () => {
         formdata.append(key, values[key]);
       }
     }
-    // console.log(values);
     console.log(formdata);
     axios({
       method: "put",

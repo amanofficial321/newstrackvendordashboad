@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../CSS/EditArticle.module.scss";
 import Navbar from "./Navbar";
 import { HiOutlineArrowSmallLeft } from "react-icons/hi2";
@@ -99,6 +99,23 @@ const Addnewsarticle = () => {
   };
   /////////////////////////////////////////////////////////////////////////////////////////
 
+  const [categories, setCategory] = useState([]);
+  const getCategories = async () => {
+    try {
+      const response = await axios.get(
+        "http://174.138.101.222:8080/getmastercategories"
+      );
+      // console.log(response.data.data, "categories");
+      setCategory(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -111,9 +128,7 @@ const Addnewsarticle = () => {
         </h1>
 
         <FormControl className="FormControl">
-          <InputLabel id="demo-simple-select-helper-label">
-            {location ? location.state.category : "Category"}
-          </InputLabel>
+          <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>
           <Select
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
@@ -122,8 +137,12 @@ const Addnewsarticle = () => {
             value={values.category}
             onChange={handleInputChange}
           >
-            {categories.map((item) => {
-              return <MenuItem value={item}>{item}</MenuItem>;
+            {categories?.map((item) => {
+              return (
+                <MenuItem key={item._id} value={item.categories_Name_Url}>
+                  {item.categories_Name_English} / {item.categories_Name_Hindi}
+                </MenuItem>
+              );
             })}
           </Select>
         </FormControl>

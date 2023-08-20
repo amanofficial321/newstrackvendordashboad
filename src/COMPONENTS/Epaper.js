@@ -48,16 +48,27 @@ const Epaper = () => {
         }));
       });
       setLoader(false);
-      // navigate("/EpaperPreview", {
-      //   state: {
-      //     pdf: pdf,
-      //     sizes: size,
-      //   },
-      // });
     } catch (error) {
       console.log(error);
       setLoader(false);
       alert("Error Occured");
+    }
+  };
+
+  const [agencyDetails, setAgencyDetails] = useState();
+
+  const id = localStorage.getItem("newspaperAgencyAdminId");
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `http://174.138.101.222:8080/${id}/get-publication-details`
+      );
+      setAgencyDetails(response.data.data[0]);
+
+      console.log(response.data.data[0]);
+    } catch (error) {
+      console.log(error);
     }
   };
   useEffect(() => {
@@ -69,6 +80,7 @@ const Epaper = () => {
         },
       });
     }
+    fetchData();
   }, [size, navigate, pdf]);
 
   const [singlePdf, setSinglePdf] = useState("Upload PDF");
@@ -103,80 +115,32 @@ const Epaper = () => {
               noValidate
               autoComplete="off"
             >
-              <TextField id="outlined-basic" label="NAME" variant="outlined" />
-              <TextField id="outlined-basic" label="STATE" variant="outlined" />
-              <TextField id="outlined-basic" label="CITY" variant="outlined" />
-              <TextField
-                id="outlined-basic"
-                label="PROVINCE"
-                variant="outlined"
-              />
-              <TextField
-                id="outlined-basic"
-                label="ADD TAG"
-                variant="outlined"
-              />
-              <TextField
-                id="outlined-basic"
-                label="DATE OF PUBLICATION"
-                variant="outlined"
-              />
-
-              <FormControl>
-                <InputLabel id="demo-simple-select-helper-label">
-                  CATEGORY
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-helper-label"
-                  id="demo-simple-select-helper"
-                  value={age}
-                  label="CATEGORY"
-                  onChange={handleChange}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl>
-                <InputLabel id="demo-simple-select-helper-label">
-                  AGENCY NAME
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-helper-label"
-                  id="demo-simple-select-helper"
-                  value={age}
-                  label="AGENCY NAME"
-                  onChange={handleChange}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl>
-                <InputLabel id="demo-simple-select-helper-label">
-                  NEWS PAPER
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-helper-label"
-                  id="demo-simple-select-helper"
-                  value={age}
-                  label="NEWS PAPER"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={""}>None</MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-              </FormControl>
+              {/* <TextField id="outlined-basic" label="NAME" variant="outlined" /> */}
+              {/* <TextField id="outlined-basic" label="STATE" variant="outlined" /> */}
+              {/* <TextField id="outlined-basic" label="CITY" variant="outlined" /> */}
+              {agencyDetails && (
+                <>
+                  {" "}
+                  <TextField
+                    id="outlined-basic"
+                    // label="Publication Name"
+                    value={agencyDetails.publication_name}
+                    variant="outlined"
+                  />
+                  <TextField
+                    id="outlined-basic"
+                    // label="Language of Publication"
+                    value={agencyDetails.Lang_of_Publication}
+                    variant="outlined"
+                  />
+                  <TextField
+                    id="outlined-basic"
+                    // label="Language"
+                    value={agencyDetails.circulation}
+                    variant="outlined"
+                  />
+                </>
+              )}
             </Box>
           </Box>
           {

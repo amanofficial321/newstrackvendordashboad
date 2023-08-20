@@ -44,15 +44,16 @@ const NewspaperAgencyLogin = () => {
 
   return (
     <>
-      <div className="admin-pagecontainer">
-        <div className="adminimagediv">
-          <img className="adminpageimage" src="images\image1.avif"></img>
+      <div className="container-fluid px-0">
+        <div className="row no-gutters" style={{height:'100vh'}}>
+        <div className="col-lg-5 col-md-6 col-sm-0 " style={{height:'100vh'}}>
+          <img style={{width:'100%', height:'100%'}} src="images\image1.avif"></img>
         </div>
 
-        <div className="adminformdiv">
+        <div className="col-lg-5 col-md-6 col-sm-12 px-3 my-auto mx-auto">
           <div>
-            {" "}
-            <p className="adminlogin2">Newspaper Agency Login</p>
+      
+            <p className="adminlogin2 text-center">Newspaper Agency Login</p>
             <div className="hrrow">
               <hr className="hr1" />
               <p className="or"> or </p>
@@ -87,6 +88,10 @@ const NewspaperAgencyLogin = () => {
             </form>
           </div>
         </div>
+        </div>
+        
+
+        
       </div>
     </>
   );
