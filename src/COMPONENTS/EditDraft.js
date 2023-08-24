@@ -116,15 +116,33 @@ const Addnewsarticle = () => {
     getCategories();
   }, []);
 
+
+  const [style, setStyle] = useState("navbarbox");
+  
+  const changeStyle = () => {
+    setStyle((prev)=>{
+      if(prev==='navbarbox'){
+        setStyle('navbarbox2')
+      }else setStyle('navbarbox')
+    });
+  };
+    
+
   return (
-    <>
-      <Navbar />
+    <> 
+      <div className={style}>
+          <Navbar />
+        </div>
       <div className="parentContainer ">
         <h1 className="bg-red">
+        <div className="dashwithfav">
           <span className="pointer" onClick={() => navigate(-1)}>
-            <HiOutlineArrowSmallLeft />
-          </span>
-          <span>Edit Draft</span>
+            <HiOutlineArrowSmallLeft className="rightShift"/>
+          Edit Draft</span>
+          <div className="onclick" onClick={changeStyle}>
+              <i class="fa-solid fa-bars"></i>
+            </div>
+          </div>
         </h1>
 
         <FormControl className="FormControl">

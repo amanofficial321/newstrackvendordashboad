@@ -199,15 +199,34 @@ const NewsApproval = () => {
     } else return time;
   };
 
+  const [style, setStyle] = useState("navbarbox");
+
+  const changeStyle = () => {
+    setStyle((prev) => {
+      if (prev === 'navbarbox') {
+        setStyle('navbarbox2')
+      } else setStyle('navbarbox')
+    });
+  }
+
   return (
     <>
-      <Navbar />
+      <div className={style}>
+        <Navbar />
+      </div>
       <div className="parentContainer">
+ 
         <h1 className="bg-red">
-          <span>
-            <HiOutlineArrowSmallLeft onClick={back} className="pointer" />
-          </span>
-          <span>News Approval</span>
+          <div className="dashwithfav">
+            <span>
+              <HiOutlineArrowSmallLeft  onClick={back} className="pointer rightShift" />
+            
+            News Approval</span> 
+
+            <div className="onclick" onClick={changeStyle}>
+              <i class="fa-solid fa-bars"></i>
+            </div>
+          </div>
         </h1>
         <ButtonGroup className="me-2 groupOfButtons" aria-label="First group">
           {" "}
@@ -327,7 +346,7 @@ const NewsApproval = () => {
         )}
 
         {table === "Pending Approval" && (
-          <table>
+          <table className="width">
             <thead>
               <tr>
                 <th>S.No.</th>
@@ -397,8 +416,7 @@ const NewsApproval = () => {
                             onClick={(e) => {
                               e.stopPropagation();
                               setSchedule_date(
-                                `${new Date().getUTCFullYear()}-${
-                                  new Date().getUTCMonth() + 1
+                                `${new Date().getUTCFullYear()}-${new Date().getUTCMonth() + 1
                                 }-${new Date().getUTCDate()}`
                               );
                               setSchedule_time(
@@ -538,14 +556,14 @@ const NewsApproval = () => {
                       <span
                         className="pointer"
                         title="Retract News"
-                        // onClick={() => handleReject(item.userId, item._id)}
+                      // onClick={() => handleReject(item.userId, item._id)}
                       >
                         <AiTwotoneDelete className="delete" />
                       </span>
                       <span
                         className="pointer"
                         title="View News"
-                        // onClick={() => handleApprove(item.userId, item._id)}
+                      // onClick={() => handleApprove(item.userId, item._id)}
                       >
                         <FiEye />
                       </span>

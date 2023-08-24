@@ -1,9 +1,34 @@
+    
+
 .parentContainer {
   box-sizing: border-box;
-  gap: 2rem;
+  gap: 2rem;   
   margin-bottom: 4rem;
+  padding-left: 1px;
+  width: 75vw;
+  height: 100vh;
+  position: absolute;
+  left: 25%;
+  
 
-  .metaDataContainer1 {
+    .fa-solid{
+      padding-top: 0px;
+    }
+
+  .dashwithfav{
+    background-color: rgb(49, 70, 177);
+    background-color: red;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    height: 12%;
+    width: 100%;
+    padding: 1rem;
+  }
+  
+
+
+  .metaDataContainer1 { 
     min-height: 10vh;
     width: 92%;
     background-color: #e2e0e0;
@@ -38,6 +63,8 @@
       }
     }
   }
+
+
 
   .articleContainer {
     height: auto;
@@ -74,3 +101,38 @@
 //   font-family: bhaskar;
 //   src: url("../Fonts/Bhaskar.ttf");
 // }
+
+
+.rightShift{
+  margin-right: 3px;
+}
+
+@media screen and (max-width: 900px) {
+
+  .navbarbox{
+    position: absolute;
+    width: 90vw;
+    /* min-width: 250px; */
+    height: 100%;
+    left: -250px;
+    transition: left ease-in-out 0.5s;
+  }
+  .navbarbox2{
+    left: 0%;
+  }
+
+.parentContainer{
+    position: absolute;
+    left: auto;
+    width: 100%;
+    z-index: 0;
+
+   
+}
+  }
+
+  @media screen and (max-width: 430px){
+    .navbarcontainer {
+        width: 60%;
+    }
+  }

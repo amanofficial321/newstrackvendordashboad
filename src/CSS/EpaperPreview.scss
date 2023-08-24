@@ -6,6 +6,10 @@
   src: url("../Fonts/Bhaskar.ttf");
 }
 
+.rightShift{
+  margin-right: 12px;
+  margin-bottom: 3px;
+}
 .home-container {
   display: flex;
   position: relative;
@@ -44,4 +48,7 @@
       width: 100%;
     }
   }
+}
+.marginLeft{
+  margin-left: 8px;
 }

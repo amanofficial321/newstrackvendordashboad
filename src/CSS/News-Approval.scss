@@ -1,3 +1,11 @@
+.navbarbox {
+  width: 0vw;
+  height: 0vh;
+}
+
+.rightShift{
+  margin-right: 4px;
+}
 .parentContainer {
   //   border: 2px solid red;
   width: 80%;
@@ -9,16 +17,16 @@
 
   h1 {
     margin: 0%;
-    height: 12vh;
+    height: 8vh;
     width: 100%;
     background-color: rgba(49, 70, 177, 1);
     color: white;
-    display: flex;
+    // display: flex;
     align-items: center;
     position: sticky;
     top: 0;
     z-index: 2;
-    padding: 0.5rem;
+    // padding: 0.5rem;
     font-size: 1.3rem;
     font-weight: 400;
   }
@@ -31,7 +39,7 @@
     // padding: 10px;
     margin-top: 4%;
     display: flex;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
     justify-content: center;
 
     .btn:first-child {
@@ -48,7 +56,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-width: 4rem;
+      min-width: 4rem; 
       height: 3rem;
       background-color: #ffffff;
       color: black;
@@ -138,3 +146,16 @@
 //   -webkit-box-orient: vertical;
 //   width: 100%;
 // }
+
+
+@media screen and (max-width: 900px){
+.epaperbox2 {
+    position: absolute;
+    left: auto;
+    width: auto;
+    z-index: 0;
+}
+.width{
+  width: 80%;
+}
+}

@@ -1,17 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import "../CSS/Maindashboard.css";
 import Navbar from "./Navbar";
 
+
 const Maindashboard = () => {
+
+
+  const [style, setStyle] = useState("navbarbox");
+
+  const changeStyle = () => {
+    setStyle((prev) => {
+      if (prev === 'navbarbox') {
+        setStyle('navbarbox2')
+      } else setStyle('navbarbox')
+    });
+  };
+
+
   return (
     <>
       <div className="maindashboard">
-        <div className="navbarbox">
+        <div className={style}>
           <Navbar />
         </div>
-        <div className="dashbox ">
-          <p className="dashboardtext">MAIN DASHBOARD</p>
+        <div className="dashbox">
 
+            <div className="dashwithfav">
+              <p className="dashboardtext">MAIN DASHBOARD</p>
+              <div className="onclick" onClick={changeStyle}>
+                <i class="fa-solid fa-bars"></i>
+              </div>
+            </div>
+          
           <h3>Upcoming Features :-</h3>
 
           <div className="userstatuscontainer">
@@ -60,7 +80,6 @@ const Maindashboard = () => {
               <h4 className="text-center">AI Features</h4>
             </div>
           </div>
-          <h3 className="mt-4">Self Help Videos :-</h3>
         </div>
       </div>
     </>

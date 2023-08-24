@@ -1,23 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import "../CSS/ViewNews.scss";
 import Navbar from "./Navbar";
 import { HiOutlineArrowSmallLeft } from "react-icons/hi2";
 import { useLocation, useNavigate } from "react-router-dom";
+
 
 const TemplateSelection = () => {
   const navigate = useNavigate();
 
   //   const item = newsData?.state.item;
   // console.log(item);
+
+  const [style, setStyle] = useState("navbarbox");
+
+  const changeStyle = () => {
+    setStyle((prev) => {
+      if (prev === 'navbarbox') {
+        setStyle('navbarbox2')
+      } else setStyle('navbarbox')
+    });
+  }
+
   return (
     <>
-      <Navbar />
+      <div className={style}>
+        <Navbar />
+      </div>
       <div className="parentContainer">
         <h1 className="bg-red">
-          <span onClick={() => navigate(-1)} className="pointer">
-            <HiOutlineArrowSmallLeft />
-          </span>
-          <span>Template Selection</span>
+        <div className="dashwithfav">
+          <span onClick={() => navigate(-1)} className="pointer rightShift">
+            <HiOutlineArrowSmallLeft className="rightShift"/> 
+          
+          Template Selection</span>
+          <div className="onclick" onClick={changeStyle}>
+              <i class="fa-solid fa-bars"></i>
+            </div>
+          </div>
         </h1>
         <h5 className="px-3">
           To use any of the available Template in your website , just simply
@@ -38,7 +57,7 @@ const TemplateSelection = () => {
                 Template 1
               </h5>
               <a className="card-text">
-                {`http://174.138.101.222:7000/Home/${localStorage.getItem(
+                {`http://174.138.101.222:7000/${localStorage.getItem(
                   "newspaperAgencyAdminId"
                 )}`}
               </a>

@@ -23,6 +23,9 @@ const Navbar = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  
+  
   return (
     <>
       <div className="navbarcontainer bg-dark">
@@ -38,6 +41,7 @@ const Navbar = () => {
           <p className="dashboard">MAIN DASHBOARD</p>
         </Link>
 
+        
         {/* <div className="dropdown dropdowns">
           <p
             className=" dropdown-toggle"

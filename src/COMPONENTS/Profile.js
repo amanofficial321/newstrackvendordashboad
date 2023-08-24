@@ -134,16 +134,38 @@ const Profile = () => {
     }
   };
 
+  const [style, setStyle] = useState("navbarbox");
+
+  const changeStyle = () => {
+    setStyle((prev) => {
+      if (prev === 'navbarbox') {
+        setStyle('navbarbox2')
+      } else setStyle('navbarbox')
+    });
+  };
+
+
   return (
     <>
-      <Navbar />
+      <div className={style}>
+          <Navbar />
+        </div>
       <div className="parentContainer">
         <h1 className="bg-red">
-          <span>
-            <HiOutlineArrowSmallLeft />
-          </span>
-          <span>UPDATE PROFILE</span>
+          <div className="dashwithfav">
+            <span>
+              <HiOutlineArrowSmallLeft className="rightShift"/>
+            UPDATE PROFILE</span>
+            <div className="onclick" onClick={changeStyle}>
+              <i class="fa-solid fa-bars"></i>
+            </div>
+          </div>
         </h1>
+
+
+
+
+
         {agencyDetails && (
           <div className="container-fluid">
             <div className="row  gx-2 gy-3">

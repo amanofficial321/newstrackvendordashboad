@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "../CSS/ViewNews.scss";
 import Navbar from "./Navbar";
 import { HiOutlineArrowSmallLeft } from "react-icons/hi2";
 import { useLocation, useNavigate } from "react-router-dom";
+
 
 const ViewNews = () => {
   const newsData = useLocation();
@@ -10,15 +11,37 @@ const ViewNews = () => {
 
   const item = newsData?.state.item;
   // console.log(item);
+
+  const [style, setStyle] = useState("navbarbox");
+
+  const changeStyle = () => {
+    setStyle((prev) => {
+      if (prev === 'navbarbox') {
+        setStyle('navbarbox2')
+      } else setStyle('navbarbox')
+    });
+  };
+
   return (
     <>
-      <Navbar />
+      <div className={style}>
+        <Navbar />
+      </div> 
       <div className="parentContainer">
+
         <h1 className="bg-red">
-          <span onClick={() => navigate(-1)} className="pointer">
-            <HiOutlineArrowSmallLeft />
-          </span>
-          <span>View News</span>
+          <div className="dashwithfav">
+
+            <span onClick={() => navigate(-1)} className="pointer rightShift">
+              <HiOutlineArrowSmallLeft className="rightShift"/> 
+              View News
+            </span>
+            
+
+            <div className="onclick" onClick={changeStyle}>
+              <i class="fa-solid fa-bars">hh</i>
+            </div>
+          </div>
         </h1>
         <div className="metaDataContainer1">
           <div className="metaDataContainer1__data">

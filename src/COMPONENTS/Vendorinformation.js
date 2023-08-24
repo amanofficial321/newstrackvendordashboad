@@ -119,7 +119,7 @@ const Vendorinfromation = () => {
         formdata.append(key, values[key]);
       }
     }
-    // console.log(formdata);
+    // console.log(formdata); 
     e.preventDefault();
     try {
       const response = await axios.post(

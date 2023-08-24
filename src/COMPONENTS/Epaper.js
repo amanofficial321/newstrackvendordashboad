@@ -86,25 +86,44 @@ const Epaper = () => {
   const [singlePdf, setSinglePdf] = useState("Upload PDF");
   const [multiPdf, setMultiPdf] = useState("Upload PDF");
 
+  const [style, setStyle] = useState("navbarbox");
+
+  const changeStyle = () => {
+    setStyle((prev) => {
+      if (prev === 'navbarbox') {
+        setStyle('navbarbox2')
+      } else setStyle('navbarbox')
+    });
+  };
+
+
   return (
     <>
       <div className="Epapermaincontainer">
         <div className="epaperbox1">
-          <Navbar />
+          <div className={style}>
+            <Navbar />
+          </div>
         </div>
 
         <div className="epaperbox2">
           <div className="epaperheader">
-            <p className="epaperheading">
-              {" "}
-              <ArrowBackIcon onClick={() => navigate(-1)} className="pointer" />
-              E-PAPER
-            </p>
+            <div className="dashwithfav">
+              <p className="epaperheading">
+                {" "}
+                <ArrowBackIcon onClick={() => navigate(-1)} className="pointer rightShift" />
+                E-PAPER
+              </p>
+              <div className="onclick" onClick={changeStyle}>
+                <i class="fa-solid fa-bars top"></i>
+              </div>
+            </div>
           </div>
           <Box
             component="div"
             sx={{
-              mt: 15,
+              mt: 8,
+              
             }}
           >
             <Box
@@ -190,13 +209,14 @@ const Epaper = () => {
               />
             </div>
           </div>
-
+          <div className="centre">
           <button
             className="btn btn-primary btn-lg epaperbtn bg-red"
             onClick={() => fetchPageSize()}
           >
             Preview
           </button>
+          </div>
         </div>
       </div>
     </>

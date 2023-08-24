@@ -98,7 +98,7 @@ const EditArticle = () => {
       <div className="parentContainer">
         <h1 className="bg-red">
           <span onClick={() => navigate(-1)} className="pointer">
-            <HiOutlineArrowSmallLeft />
+            <HiOutlineArrowSmallLeft className="rightShift"/>
           </span>
           <span>Edit Article</span>
         </h1>
