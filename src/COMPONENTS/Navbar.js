@@ -106,7 +106,7 @@ const Navbar = () => {
             <Link to={"/create-ad"} className="dropdown-item">
               CREATE AN AD
             </Link>
-            <a className="dropdown-item" href="#">
+            {/* <a className="dropdown-item" href="#">
               AD LIST
             </a>
             <a className="dropdown-item" href="#">
@@ -117,7 +117,7 @@ const Navbar = () => {
             </a>
             <a className="dropdown-item" href="#">
               AD SETTING TOPICS
-            </a>
+            </a> */}
           </div>
         </div>
 
