@@ -148,7 +148,7 @@ const Addnewsarticle = () => {
             <HiOutlineArrowSmallLeft className="pointer rightShift" />
           Post News</span>
           <div className="onclick" onClick={changeStyle}>
-              <i class="fa-solid fa-bars"></i>
+              <i className="fa-solid fa-bars"></i>
             </div>
           </div>
         </h1>

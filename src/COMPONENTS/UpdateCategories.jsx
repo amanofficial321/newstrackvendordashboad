@@ -66,7 +66,6 @@ const UpdateCategories = () => {
         {categories && (
           <Autocomplete
             multiple
-            // id="checkboxes-tags-demo"
             options={categories}
             disableCloseOnSelect
             onChange={(event, newValue) => {

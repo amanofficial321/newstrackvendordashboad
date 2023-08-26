@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import categories from "../Masters/Categories";
+import { Autocomplete } from "@mui/material";
 
 const Addnewsarticle = () => {
   const location = useLocation();
@@ -31,7 +32,7 @@ const Addnewsarticle = () => {
     body: location?.state.body,
     image: "",
     url: "",
-    tags: "",
+    tags: [],
     news_priority: "",
     news_sections: "newsSection",
     change_byline: false,
@@ -112,35 +113,48 @@ const Addnewsarticle = () => {
     }
   };
 
+  const [tags, setTags] = useState([]);
+  const getTags = async () => {
+    try {
+      const response = await axios.get('http://174.138.101.222:8080/getmastertag');
+      // console.log(response.data.data.map((item) => item.tag_name))
+      setTags(response.data.data.map((item) => item.tag_name));
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     getCategories();
+    getTags()
   }, []);
 
 
   const [style, setStyle] = useState("navbarbox");
-  
+
   const changeStyle = () => {
-    setStyle((prev)=>{
-      if(prev==='navbarbox'){
+    setStyle((prev) => {
+      if (prev === 'navbarbox') {
         setStyle('navbarbox2')
-      }else setStyle('navbarbox')
+      } else setStyle('navbarbox')
     });
   };
-    
+
+  // console.log(values.tags)
 
   return (
-    <> 
+    <>
       <div className={style}>
-          <Navbar />
-        </div>
+        <Navbar />
+      </div>
       <div className="parentContainer ">
         <h1 className="bg-red">
-        <div className="dashwithfav">
-          <span className="pointer" onClick={() => navigate(-1)}>
-            <HiOutlineArrowSmallLeft className="rightShift"/>
-          Edit Draft</span>
-          <div className="onclick" onClick={changeStyle}>
-              <i class="fa-solid fa-bars"></i>
+          <div className="dashwithfav">
+            <span className="pointer" onClick={() => navigate(-1)}>
+              <HiOutlineArrowSmallLeft className="rightShift" />
+              Edit Draft</span>
+            <div className="onclick" onClick={changeStyle}>
+              <i className="fa-solid fa-bars"></i>
             </div>
           </div>
         </h1>
@@ -192,22 +206,7 @@ const Addnewsarticle = () => {
             }}
           />
         </div>
-        {/* <div className="ckeditor">
-          <p className="cktitle">Sub Heading *</p>
-          <CKEditor
-            editor={ClassicEditor}
-            data="<p>Hello from CKEditor 5!</p>"
-            name="sub_heading"
-            value={values.sub_heading}
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              setValues({
-                ...values,
-                sub_heading: data,
-              });
-            }}
-          />
-        </div> */}
+
         <div className="ckeditor FormControl">
           <p className="cktitle">Summary / Short Details *</p>
           <CKEditor
@@ -283,7 +282,7 @@ const Addnewsarticle = () => {
           value={values.url}
           onChange={handleInputChange}
         />
-        <TextField
+        {/* <TextField
           id="outlined-basic"
           label="Tags/Keywords"
           variant="outlined"
@@ -291,6 +290,26 @@ const Addnewsarticle = () => {
           name="tags"
           value={values.tags}
           onChange={handleInputChange}
+        /> */}
+        <Autocomplete
+          multiple
+          className="FormControl"
+          options={tags}
+          getOptionLabel={(option) => option.tag_name}
+          // value={values.tags}
+          // onChange={(event, newValue) => {
+          //   console.log(newValue.map((item)=>item.tag_name));
+
+
+          // }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="outlined"
+              label="Tags/Keywords"
+              placeholder="Add Tag"
+            />
+          )}
         />
         <FormControl className="FormControl">
           <InputLabel id="demo-simple-select-helper-label">

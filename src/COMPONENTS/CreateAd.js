@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../CSS/Maindashboard.css";
 import Navbar from "./Navbar";
 import "../CSS/CreateAd.css";
@@ -30,12 +30,9 @@ const CreateAd = () => {
     text: "",
   };
   const [values, setValues] = useState(initialValue);
-  // console.log(values);
 
   const handleInputChange = (e) => {
-    const { name, value, files } = e.target;
-    // console.log(e.target)
-    // console.log(name, value);
+    const { name, value } = e.target;
     if (name === "image") {
       setValues((prev) => {
         return { ...prev, "image": e.target.files[0] };
@@ -47,9 +44,23 @@ const CreateAd = () => {
     }
 
   };
-  console.log(values);
 
   const id = localStorage?.getItem("newspaperAgencyAdminId");
+
+  const [adPermission, setAdPermission] = useState();
+  const getAdvPermission = async ()=>{
+    
+    try {
+      const response = await axios.get(`http://174.138.101.222:8080/${id}/getvendorPageNameLocations`)
+      // console.log(response.data.data[0])
+      setAdPermission(response.data.data[0])
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(()=>{
+    getAdvPermission()
+  },[])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,7 +68,6 @@ const CreateAd = () => {
     for (let key in values) {
       formdata.append(key, values[key]);
     }
-    // console.log(formdata);
     try {
       const response = await axios.post(
         `http://174.138.101.222:8080/${id}/create-advertisement`,
@@ -69,19 +79,11 @@ const CreateAd = () => {
         }
       );
       console.log(response);
-      setValues({
-        page_name: "",
-        page_location: "",
-        desktop: "",
-        start_date: "",
-        end_date: "",
-        image: "",
-        script: "",
-        text: "",
-      })
+      setValues(initialValue)
       alert('Ad Created')
     } catch (error) {
       console.log(error);
+      alert(error.message)
     }
   };
 
@@ -109,11 +111,11 @@ const CreateAd = () => {
         <div className="dashwithfav">
 
           <span className="my-auto" style={{ fontSize: '1.3rem', fontWeight: '400' }} onClick={() => navigate(-1)} >
-            <HiOutlineArrowSmallLeft className="rightShift" style={{ marginRight: "16px;" }} />
+            <HiOutlineArrowSmallLeft className="rightShift" style={{ marginRight: "16px" }} />
             Create Advertisement </span>
 
           <div className="onclick" onClick={changeStyle}>
-            <i class="fa-solid fa-bars"></i>
+            <i className="fa-solid fa-bars"></i>
           </div>
 
         </div>
@@ -129,10 +131,11 @@ const CreateAd = () => {
             name="page_name"
             value={values.page_name}
             onChange={handleInputChange}
-          >
-            <MenuItem value={"Home_Page"}>Home Page</MenuItem>
-            <MenuItem value={"Categories_Page"}>Categories Page</MenuItem>
-            <MenuItem value={"Detailed_News_Page"}>Detailed News Page</MenuItem>
+          > {
+            adPermission && adPermission.page_name.map((item, index)=>{
+                return <MenuItem key={index} value={item}>{item}</MenuItem>
+            }) 
+          }
           </Select>
         </FormControl>
         <br />
@@ -145,9 +148,11 @@ const CreateAd = () => {
             value={values.page_location}
             onChange={handleInputChange}
           >
-            <MenuItem value={"Topbar"}>Topbar</MenuItem>
-            <MenuItem value={"Below_Breaking_News"}>Below Breaking News</MenuItem>
-            <MenuItem value={"Footer"}>Footer</MenuItem>
+            {
+            adPermission && adPermission.page_location.map((item, index)=>{
+                return <MenuItem key={index} value={item}>{item}</MenuItem>
+            }) 
+          }
           </Select>
         </FormControl>
         <br />
